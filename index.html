@@ -939,18 +939,19 @@
                         </div>
                         
                         <h4>Новые покупатели</h4>
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>Дата</th>
-                                    <th>Telegram</th>
-                                    <th>Сумма</th>
-                                </tr>
-                            </thead>
-                            <tbody id="customers-table">
-                                <!-- Данные будут добавляться сюда -->
-                            </tbody>
-                        </table>
+                      <table class="admin-table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Telegram</th>
+            <th>Сумма</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody id="customers-table">
+        <!-- Данные будут добавляться сюда -->
+    </tbody>
+</table>
                         
                         <button class="btn" id="admin-logout" style="margin-top: 2rem;">Выйти</button>
                     </div>
@@ -1216,7 +1217,16 @@
         function getPurchases() {
             return JSON.parse(localStorage.getItem('purchases')) || [];
         }
-        
+
+        function deletePurchase(id) {
+    let purchases = getPurchases();
+    purchases = purchases.filter(purchase => purchase.id !== id);
+    localStorage.setItem('purchases', JSON.stringify(purchases));
+    updateAdminStats();
+    alert('Покупка удалена!');
+}
+
+
         function updateAdminStats() {
             const purchases = getPurchases();
             const today = new Date().toLocaleDateString('ru-RU');
@@ -1305,3 +1315,4 @@
         });
     });
 }
+
