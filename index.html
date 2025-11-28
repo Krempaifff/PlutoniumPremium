@@ -939,19 +939,18 @@
                         </div>
                         
                         <h4>Новые покупатели</h4>
-                      <table class="admin-table">
-    <thead>
-        <tr>
-            <th>Дата</th>
-            <th>Telegram</th>
-            <th>Сумма</th>
-            <th>Действия</th>
-        </tr>
-    </thead>
-    <tbody id="customers-table">
-        <!-- Данные будут добавляться сюда -->
-    </tbody>
-</table>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Telegram</th>
+                                    <th>Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-table">
+                                <!-- Данные будут добавляться сюда -->
+                            </tbody>
+                        </table>
                         
                         <button class="btn" id="admin-logout" style="margin-top: 2rem;">Выйти</button>
                     </div>
@@ -1217,16 +1216,7 @@
         function getPurchases() {
             return JSON.parse(localStorage.getItem('purchases')) || [];
         }
-
-        function deletePurchase(id) {
-    let purchases = getPurchases();
-    purchases = purchases.filter(purchase => purchase.id !== id);
-    localStorage.setItem('purchases', JSON.stringify(purchases));
-    updateAdminStats();
-    alert('Покупка удалена!');
-}
-
-
+        
         function updateAdminStats() {
             const purchases = getPurchases();
             const today = new Date().toLocaleDateString('ru-RU');
@@ -1262,57 +1252,53 @@
             updateCustomersTable(purchases);
         }
         
-       function updateCustomersTable(purchases) {
-    const tableBody = document.getElementById('customers-table');
-    tableBody.innerHTML = '';
-    
-    // Сортируем по дате (новые сверху)
-    const sortedPurchases = purchases.sort((a, b) => b.timestamp - a.timestamp);
-    
-    sortedPurchases.forEach(purchase => {
-        const row = document.createElement('tr');
-        
-        const dateCell = document.createElement('td');
-        dateCell.textContent = purchase.date;
-        
-        const tgCell = document.createElement('td');
-        tgCell.innerHTML = `
-            ${purchase.telegram}
-            <button class="copy-tg" data-tg="${purchase.telegram}">📋</button>
-        `;
-        
-        const amountCell = document.createElement('td');
-        amountCell.textContent = purchase.amount;
-        
-        const actionCell = document.createElement('td');
-        actionCell.innerHTML = `<button class="delete-btn" data-id="${purchase.id}">🗑️ Удалить</button>`;
-        
-        row.appendChild(dateCell);
-        row.appendChild(tgCell);
-        row.appendChild(amountCell);
-        row.appendChild(actionCell);
-        
-        tableBody.appendChild(row);
-    });
-    
-    // Добавляем обработчики для кнопок копирования
-    document.querySelectorAll('.copy-tg').forEach(button => {
-        button.addEventListener('click', function() {
-            const tg = this.getAttribute('data-tg');
-            navigator.clipboard.writeText(tg).then(() => {
-                alert('Telegram скопирован: ' + tg);
+        function updateCustomersTable(purchases) {
+            const tableBody = document.getElementById('customers-table');
+            tableBody.innerHTML = '';
+            
+            // Сортируем по дате (новые сверху)
+            const sortedPurchases = purchases.sort((a, b) => b.timestamp - a.timestamp);
+            
+            sortedPurchases.forEach(purchase => {
+                const row = document.createElement('tr');
+                
+                const dateCell = document.createElement('td');
+                dateCell.textContent = purchase.date;
+                
+                const tgCell = document.createElement('td');
+                tgCell.innerHTML = `
+                    ${purchase.telegram}
+                    <button class="copy-tg" data-tg="${purchase.telegram}">📋</button>
+                `;
+                
+                const amountCell = document.createElement('td');
+                amountCell.textContent = purchase.amount;
+                
+                row.appendChild(dateCell);
+                row.appendChild(tgCell);
+                row.appendChild(amountCell);
+                
+                tableBody.appendChild(row);
             });
-        });
-    });
-    
-    // Добавляем обработчики для кнопок удаления
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const id = parseInt(this.getAttribute('data-id'));
-            if (confirm('Удалить эту покупку?')) {
-                deletePurchase(id);
+            
+            // Добавляем обработчики для кнопок копирования
+            document.querySelectorAll('.copy-tg').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tg = this.getAttribute('data-tg');
+                    navigator.clipboard.writeText(tg).then(() => {
+                        alert('Telegram скопирован: ' + tg);
+                    });
+                });
+            });
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Если есть покупки, обновляем статистику
+            if (getPurchases().length > 0) {
+                updateAdminStats();
             }
         });
-    });
-}
-
+    </script>
+</body>
+</html>
