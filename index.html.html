@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plutonium Premium - Чит для Standoff 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f1419;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Снег эффект */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        
+        header {
+            background-color: rgba(26, 31, 46, 0.9);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .logo h1 {
+            color: #ff6b00;
+            font-size: 1.8rem;
+        }
+        
+        .logo span {
+            color: #00a8ff;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff6b00;
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(15, 20, 25, 0.85), rgba(15, 20, 25, 0.9)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 0, 0.1), rgba(0, 168, 255, 0.1));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: #e0e0e0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b00, #ff8c00);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+        }
+        
+        .features {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #ff6b00;
+            font-size: 2.5rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b00, #00a8ff);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid #2a3142;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: #ff6b00;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #00a8ff;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: #fff;
+            font-size: 1.4rem;
+        }
+        
+        .pricing {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #151a24, #0f1419);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .pricing-card {
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            border-radius: 15px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border: 1px solid #2a3142;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .pricing-header {
+            background: linear-gradient(45deg, #ff6b00, #ff8c00);
+            padding: 2rem 1.5rem;
+            color: white;
+        }
+        
+        .pricing-header h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        
+        .pricing-body {
+            padding: 2.5rem 2rem;
+        }
+        
+        .pricing-body ul {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+        
+        .pricing-body li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #2a3142;
+            color: #ccc;
+        }
+        
+        .pricing-body li:last-child {
+            border-bottom: none;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            padding: 2.5rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a3142;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #2a3142;
+            padding-bottom: 1.5rem;
+        }
+        
+        .modal-header h3 {
+            color: #ff6b00;
+            font-size: 1.5rem;
+        }
+        
+        .close {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: #ff6b00;
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #2a3142;
+            background-color: #0f1419;
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b00;
+        }
+        
+        .payment-info {
+            background-color: #0f1419;
+            padding: 1.8rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border: 1px solid #2a3142;
+        }
+        
+        .payment-info h4 {
+            color: #ff6b00;
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+        
+        .payment-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+        
+        .payment-details span:last-child {
+            font-weight: 600;
+            color: #ff6b00;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #151a24, #0f1419);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid #2a3142;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b00;
+        }
+        
+        .copyright {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .reviews {
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .reviews-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3142;
+        }
+        
+        .reviews-content h3 {
+            color: #ff6b00;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .reviews-content p {
+            margin-bottom: 2.5rem;
+            color: #ccc;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(45deg, #0088cc, #00a8ff);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+        
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+        }
+        
+        .help {
+            padding: 5rem 0;
+        }
+        
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.2rem;
+            border: 1px solid #2a3142;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+        }
+        
+        .faq-question {
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: linear-gradient(145deg, #1f2535, #1a1f2e);
+        }
+        
+        .faq-answer {
+            padding: 1.5rem;
+            background-color: #0f1419;
+            display: none;
+            border-top: 1px solid #2a3142;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .admin-panel {
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .admin-login {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3142;
+        }
+        
+        .admin-login h3 {
+            color: #ff6b00;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        .admin-content {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: linear-gradient(145deg, #1a1f2e, #151a24);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3142;
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(145deg, #151a24, #0f1419);
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #2a3142;
+        }
+        
+        .stat-card h4 {
+            color: #00a8ff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .stat-card p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b00;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: #0f1419;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .admin-table th, .admin-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid #2a3142;
+        }
+        
+        .admin-table th {
+            background: linear-gradient(45deg, #ff6b00, #ff8c00);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .copy-tg {
+            background: none;
+            border: none;
+            color: #00a8ff;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        .copy-tg:hover {
+            color: #ff6b00;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+                width: 100%;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.8rem 1rem;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .feature-card, .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .admin-login, .admin-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .price {
+                font-size: 2.5rem;
+            }
+            
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-table {
+                font-size: 0.9rem;
+            }
+            
+            .admin-table th, .admin-table td {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Снежный эффект -->
+    <div id="snow-container"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" id="logo">
+                    <h1>Plutonium <span>Premium</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-section="home">Главная</a></li>
+                        <li><a href="#" class="nav-link" data-section="pricing">Купить</a></li>
+                        <li><a href="#" class="nav-link" data-section="reviews">Отзывы</a></li>
+                        <li><a href="#" class="nav-link" data-section="help">Помощь</a></li>
+                        <li><a href="#" class="nav-link" data-section="admin">Войти</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h2>Plutonium Premium</h2>
+                        <p>Элитный чит для Standoff 2 с премиальными функциями и максимальной защитой. Доминируйте в игре с нашим решением!</p>
+                        <a href="#" class="btn" id="buy-now-btn">Купить сейчас</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="container">
+                    <h2 class="section-title">Возможности чита</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🚀</div>
+                            <h3>Летать</h3>
+                            <p>Парите над картой и добирайтесь до недоступных мест</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3>Стрелять сквозь стены</h3>
+                            <p>Обнаруживайте и уничтожайте врагов через любые препятствия</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">👻</div>
+                            <h3>Невидимость</h3>
+                            <p>Станьте невидимым для противников и появляйтесь в самых неожиданных местах</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>Авто-прицел</h3>
+                            <p>Автоматическое наведение на врагов с максимальной точностью</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🛡️</div>
+                            <h3>Защита от бана</h3>
+                            <p>Продвинутая система обхода античита для максимальной безопасности</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔧</div>
+                            <h3>Простота использования</h3>
+                            <p>Интуитивный интерфейс и легкая настройка под ваш стиль игры</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section">
+            <div class="pricing">
+                <div class="container">
+                    <h2 class="section-title">Выберите подписку</h2>
+                    <div class="pricing-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-header">
+                                <h3>7 дней</h3>
+                                <div class="price">150 грн</div>
+                            </div>
+                            <div class="pricing-body">
+                                <ul>
+                                    <li>Полный доступ ко всем функциям</li>
+                                    <li>Техническая поддержка 24/7</li>
+                                    <li>Автоматические обновления</li>
+                                    <li>Доступ к приватному Discord</li>
+                                </ul>
+                                <button class="btn buy-btn" data-plan="7 дней" data-price="150">Купить</button>
+                            </div>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-header">
+                                <h3>30 дней</h3>
+                                <div class="price">300 грн</div>
+                            </div>
+                            <div class="pricing-body">
+                                <ul>
+                                    <li>Полный доступ ко всем функциям</li>
+                                    <li>Техническая поддержка 24/7</li>
+                                    <li>Автоматические обновления</li>
+                                    <li>Доступ к приватному Discord</li>
+                                    <li>Приоритет в очереди на поддержку</li>
+                                </ul>
+                                <button class="btn buy-btn" data-plan="30 дней" data-price="300">Купить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="section">
+            <div class="reviews">
+                <div class="container">
+                    <h2 class="section-title">Отзывы наших клиентов</h2>
+                    <div class="reviews-content">
+                        <h3>Присоединяйтесь к нашему Telegram-каналу с отзывами</h3>
+                        <p>Узнайте, что говорят о нашем продукте реальные пользователи. Более 500+ положительных отзывов и постоянная поддержка!</p>
+                        <a href="https://t.me/plutotziv" class="telegram-btn" target="_blank">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.14.141-.259.259-.374.261l.213-3.053 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.136-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                            </svg>
+                            Перейти к отзывам в Telegram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="help" class="section">
+            <div class="help">
+                <div class="container">
+                    <h2 class="section-title">Помощь и поддержка</h2>
+                    <div class="faq">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Как установить чит?</span>
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>После покупки вы получите инструкцию по установке и файлы для скачивания. Процесс установки занимает не более 5 минут.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Безопасен ли чит?</span>
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Да, наш чит использует продвинутые методы обхода античита. Мы регулярно обновляем защиту для максимальной безопасности.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Как происходит оплата?</span>
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Оплата происходит через карту. После подтверждения оплаты вы сразу получаете доступ к читу.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Что делать, если чит не работает?</span>
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Обратитесь в нашу техническую поддержку в Telegram. Мы поможем решить проблему в кратчайшие сроки.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Можно ли вернуть деньги?</span>
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Возврат средств возможен в течение 24 часов после покупки, если чит не был активирован.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin" class="section">
+            <div class="admin-panel">
+                <div class="container">
+                    <h2 class="section-title">Авторизация</h2>
+                    
+                    <div class="admin-login" id="admin-login">
+                        <h3>Вход в систему</h3>
+                        <div class="form-group">
+                            <label for="admin-username">Логин</label>
+                            <input type="text" id="admin-username" placeholder="Введите логин">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-password">Пароль</label>
+                            <input type="password" id="admin-password" placeholder="Введите пароль">
+                        </div>
+                        <button class="btn" id="admin-login-btn">Войти</button>
+                    </div>
+                    
+                    <div class="admin-content" id="admin-content">
+                        <h3>Панель управления Plutonium Premium</h3>
+                        
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <h4>Всего продаж</h4>
+                                <p id="total-sales">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Общий доход</h4>
+                                <p id="total-income">0 грн</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Доход за месяц</h4>
+                                <p id="month-income">0 грн</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Новых сегодня</h4>
+                                <p id="today-sales">0</p>
+                            </div>
+                        </div>
+                        
+                        <h4>Новые покупатели</h4>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Telegram</th>
+                                    <th>Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-table">
+                                <!-- Данные будут добавляться сюда -->
+                            </tbody>
+                        </table>
+                        
+                        <button class="btn" id="admin-logout" style="margin-top: 2rem;">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="purchase-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Оформление заказа</h3>
+                <button class="close">&times;</button>
+            </div>
+            <form id="purchase-form">
+                <div class="form-group">
+                    <label for="telegram">Ваш Telegram</label>
+                    <input type="text" id="telegram" placeholder="@username" required>
+                </div>
+                <div class="form-group">
+                    <label for="promo">Промокод (если есть)</label>
+                    <input type="text" id="promo" placeholder="Введите промокод">
+                </div>
+                
+                <div class="payment-info">
+                    <h4>Данные для оплаты</h4>
+                    <div class="payment-details">
+                        <span>Карта:</span>
+                        <span>4441 1110 5670 7411</span>
+                    </div>
+                    <div class="payment-details">
+                        <span>Сумма к оплате:</span>
+                        <span id="payment-amount">0 грн</span>
+                    </div>
+                    <div class="payment-details">
+                        <span>Получатель:</span>
+                        <span>Олександр В.</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1.5rem;">Подтвердить оплату</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="nav-link" data-section="home">Главная</a>
+                    <a href="#" class="nav-link" data-section="pricing">Купить</a>
+                    <a href="#" class="nav-link" data-section="reviews">Отзывы</a>
+                    <a href="#" class="nav-link" data-section="help">Помощь</a>
+                </div>
+                <div class="copyright">
+                    &copy; 2023 Plutonium Premium. Все права защищены.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Снежный эффект
+        function createSnow() {
+            const snowContainer = document.getElementById('snow-container');
+            const snowflakeCount = 100;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                // Случайный размер снежинки
+                const size = Math.random() * 5 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                // Случайная начальная позиция
+                snowflake.style.left = `${Math.random() * 100}%`;
+                snowflake.style.top = `${Math.random() * 100}%`;
+                
+                                // Случайная прозрачность
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // Анимация падения
+                const animationDuration = Math.random() * 10 + 10;
+                snowflake.style.animation = `fall ${animationDuration}s linear infinite`;
+                
+                snowContainer.appendChild(snowflake);
+            }
+        }
+        
+        // Добавляем CSS для анимации снега
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% {
+                    transform: translateY(-100px) rotate(0deg);
+                }
+                100% {
+                    transform: translateY(100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Запускаем снег после загрузки страницы
+        window.addEventListener('load', createSnow);
+        
+        // Навигация по разделам
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Убираем активный класс у всех ссылок
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // Добавляем активный класс к текущей ссылке
+                this.classList.add('active');
+                
+                // Скрываем все разделы
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Показываем выбранный раздел
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Прокручиваем к верху страницы
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // Кликабельный логотип
+        document.getElementById('logo').addEventListener('click', function() {
+            // Убираем активный класс у всех ссылок
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            // Добавляем активный класс к главной ссылке
+            document.querySelector('[data-section="home"]').classList.add('active');
+            
+            // Скрываем все разделы
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показываем главный раздел
+            document.getElementById('home').classList.add('active');
+            
+            // Прокручиваем к верху страницы
+            window.scrollTo(0, 0);
+        });
+        
+        // Кликабельная кнопка "Купить сейчас" на главной
+        document.getElementById('buy-now-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Убираем активный класс у всех ссылок
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            // Добавляем активный класс к ссылке "Купить"
+            document.querySelector('[data-section="pricing"]').classList.add('active');
+            
+            // Скрываем все разделы
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показываем раздел с ценами
+            document.getElementById('pricing').classList.add('active');
+            
+            // Прокручиваем к верху страницы
+            window.scrollTo(0, 0);
+        });
+        
+        // Модальное окно покупки
+        const modal = document.getElementById('purchase-modal');
+        const buyButtons = document.querySelectorAll('.buy-btn');
+        const closeButton = document.querySelector('.close');
+        const paymentAmount = document.getElementById('payment-amount');
+        
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const plan = this.getAttribute('data-plan');
+                let price = parseFloat(this.getAttribute('data-price'));
+                
+                // Генерируем случайное количество копеек
+                const randomCents = (Math.random() * 99).toFixed(0).padStart(2, '0');
+                price = price + parseFloat(`0.${randomCents}`);
+                
+                paymentAmount.textContent = `${price.toFixed(2)} грн`;
+                modal.style.display = 'flex';
+            });
+        });
+        
+        closeButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Обработка формы покупки
+        document.getElementById('purchase-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const telegram = document.getElementById('telegram').value;
+            const promo = document.getElementById('promo').value;
+            const amount = document.getElementById('payment-amount').textContent;
+            
+            // Сохраняем данные о покупке
+            savePurchase(telegram, amount);
+            
+            alert(`Спасибо за покупку! Мы свяжемся с вами в Telegram: ${telegram} в течение 15 минут.`);
+            modal.style.display = 'none';
+            this.reset();
+        });
+        
+        // FAQ аккордеон
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Админ-панель
+        document.getElementById('admin-login-btn').addEventListener('click', function() {
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            
+            // Логин и пароль для админ-панели
+            if (username === 'admin' && password === 'Plutonium2023!') {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                updateAdminStats();
+            } else {
+                alert('Неверный логин или пароль!');
+            }
+        });
+        
+        document.getElementById('admin-logout').addEventListener('click', function() {
+            document.getElementById('admin-content').style.display = 'none';
+            document.getElementById('admin-login').style.display = 'block';
+            document.getElementById('admin-username').value = '';
+            document.getElementById('admin-password').value = '';
+        });
+        
+        // Функции для работы с данными
+        function savePurchase(telegram, amount) {
+            const purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+            const purchase = {
+                id: Date.now(),
+                telegram: telegram,
+                amount: amount,
+                date: new Date().toLocaleDateString('ru-RU'),
+                timestamp: new Date().getTime()
+            };
+            
+            purchases.push(purchase);
+            localStorage.setItem('purchases', JSON.stringify(purchases));
+        }
+        
+        function getPurchases() {
+            return JSON.parse(localStorage.getItem('purchases')) || [];
+        }
+        
+        function updateAdminStats() {
+            const purchases = getPurchases();
+            const today = new Date().toLocaleDateString('ru-RU');
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            // Общая статистика
+            const totalSales = purchases.length;
+            const todaySales = purchases.filter(p => p.date === today).length;
+            
+            // Расчет доходов
+            let totalIncome = 0;
+            let monthIncome = 0;
+            
+            purchases.forEach(purchase => {
+                const amount = parseFloat(purchase.amount);
+                totalIncome += amount;
+                
+                // Доход за текущий месяц
+                const purchaseDate = new Date(purchase.timestamp);
+                if (purchaseDate.getMonth() === currentMonth && purchaseDate.getFullYear() === currentYear) {
+                    monthIncome += amount;
+                }
+            });
+            
+            // Обновляем статистику
+            document.getElementById('total-sales').textContent = totalSales;
+            document.getElementById('today-sales').textContent = todaySales;
+            document.getElementById('total-income').textContent = totalIncome.toFixed(2) + ' грн';
+            document.getElementById('month-income').textContent = monthIncome.toFixed(2) + ' грн';
+            
+            // Обновляем таблицу покупателей
+            updateCustomersTable(purchases);
+        }
+        
+        function updateCustomersTable(purchases) {
+            const tableBody = document.getElementById('customers-table');
+            tableBody.innerHTML = '';
+            
+            // Сортируем по дате (новые сверху)
+            const sortedPurchases = purchases.sort((a, b) => b.timestamp - a.timestamp);
+            
+            sortedPurchases.forEach(purchase => {
+                const row = document.createElement('tr');
+                
+                const dateCell = document.createElement('td');
+                dateCell.textContent = purchase.date;
+                
+                const tgCell = document.createElement('td');
+                tgCell.innerHTML = `
+                    ${purchase.telegram}
+                    <button class="copy-tg" data-tg="${purchase.telegram}">📋</button>
+                `;
+                
+                const amountCell = document.createElement('td');
+                amountCell.textContent = purchase.amount;
+                
+                row.appendChild(dateCell);
+                row.appendChild(tgCell);
+                row.appendChild(amountCell);
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Добавляем обработчики для кнопок копирования
+            document.querySelectorAll('.copy-tg').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tg = this.getAttribute('data-tg');
+                    navigator.clipboard.writeText(tg).then(() => {
+                        alert('Telegram скопирован: ' + tg);
+                    });
+                });
+            });
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Если есть покупки, обновляем статистику
+            if (getPurchases().length > 0) {
+                updateAdminStats();
+            }
+        });
+    </script>
+</body>
+</html>
